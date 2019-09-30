@@ -51,9 +51,9 @@ Tanto su ApiKey como su SecretKey se obtienen desde su cuenta de VirtualPos:
 
 **Ambientes:**
 
-| Producción | https://www.virtualpos.cl/admin/index.php?controller=pjAdmin&action=pjActionOwner#integración |
+| Producción | https://www.virtualpos.cl/admin/index.php?controller=pjAdmin&action=pjActionOwner&tab=8 |
 |--|--|
-| **Sandbox** | **https://dev.virtualpos.cl/admin/index.php?controller=pjAdmin&action=pjActionOwner#integración** |
+| **Sandbox** | **https://dev.virtualpos.cl/admin/index.php?controller=pjAdmin&action=pjActionOwner&tab=8** |
 
 
 **Tarjetas de pruebas Sandbox**
