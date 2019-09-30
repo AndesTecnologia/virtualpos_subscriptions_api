@@ -137,7 +137,7 @@ Para efectuar el pago de una transacción por medio de la API de VirtualPOS, es 
 |--|--|
 | response |  200|
 |  message| Descripción de respuesta, ver tabla. |
-| client | Cliente creado y asociado a la solicitud de pago |
+| client | Cliente creado y asociado a la suscripción |
 | email |  Correo electrónico del cliente creado y asociado la suscripción|
 | first_name | Nombre del cliente creado y asociado a la suscripción |
 | last_name |Apellido del cliente creado y asociado a la suscripción  |
