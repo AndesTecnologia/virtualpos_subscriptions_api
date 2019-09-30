@@ -138,9 +138,9 @@ Para efectuar el pago de una transacción por medio de la API de VirtualPOS, es 
 | response |  200|
 |  message| Descripción de respuesta, ver tabla. |
 | client | Cliente creado y asociado a la solicitud de pago |
-| email |  Correo electrónico del cliente creado y asociado a la solicitud de pago|
-| first_name | Nombre del cliente creado y asociado a la solicitud de pago |
-| last_name |Apellido del cliente creado y asociado a la solicitud de pago  |
+| email |  Correo electrónico del cliente creado y asociado la suscripción|
+| first_name | Nombre del cliente creado y asociado a la suscripción |
+| last_name |Apellido del cliente creado y asociado a la suscripción  |
 |uuid|Código único que representa la transacción de suscripción a un plan con PAT virtualPOS. Se recomienda almacenar este token para posteriormente consultar el resultado del registro.|
 |url_redirect|URL de virtualPOS  a la cual debe ser redirigido el usuario para inscribir su tarjeta de crédito en forma segura. A esta URL se debe enviar el token vía POST.|
 
@@ -276,7 +276,7 @@ require( dirname(__FILE__) . '/jwt/vendor/autoload.php' );
 
 | Código | Descripción |
 |--|--|
-| 200 | Solicitud de pago existente, se devuelven datos del estado actual de la solicitud de pago |
+| 200 | Transacción de suscripción aceptada, se devuelven datos para continuar el proceso de suscripción. |
 |401|Inscripción rechazada por banco emisor.|
 |402|En proceso de inscripción|
 |403|Inscripción cancelada por usuario.|
