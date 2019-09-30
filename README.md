@@ -3,7 +3,7 @@
 ![enter image description here](https://s3-us-west-2.amazonaws.com/virtualpos/media/api_images/image4.png)
 # API de Integración REST - Suscripciones
 
-Esto es una guía para integrarse con virtualpos.cl - Suscripciones, para realizar esto, virtualpos disponibiliza una API REST con los métodos necesarios para generar una suscripción a través de la plataforma.
+Esto es una guía para integrarse modelo de suscripciones de virtualpos.cl, para realizar esto, virtualpos disponibiliza una API REST con los métodos necesarios para generar una suscripción a través de la plataforma.
 
 Como requisito, para poder hacer uso de las herramientas de virtualpos.cl a través de su api de integración, el usuario debe contar con lo siguiente.
 
@@ -144,11 +144,6 @@ Para efectuar el pago de una transacción por medio de la API de VirtualPOS, es 
 |uuid|Código único que representa la transacción de suscripción a un plan con PAT virtualPOS. Se recomienda almacenar este token para posteriormente consultar el resultado del registro.|
 |url_redirect|URL de virtualPOS  a la cual debe ser redirigido el usuario para inscribir su tarjeta de crédito en forma segura. A esta URL se debe enviar el token vía POST.|
 
-**Ejemplo:** 
-
-{"status":"OK","code":200,"cliente":{"email":"johndoe@gmail.com","first_name":"John","last_name":"Doe"},"order":{"uuid":"34125c784ee5e520","status":"pendiente","created":"2019-02-28 18:13:09"},"url_redirect":"https:\/\/www.virtualpos.cl\/admin\/index.php?controller=apiPublic&action=pjActionDoPay"}
-
-
 **Códigos de respuesta:**
 
 | Código |  Descripción|
@@ -169,6 +164,87 @@ Para efectuar el pago de una transacción por medio de la API de VirtualPOS, es 
 |515|Error en parámetro return_url|
 |516|Error en parámetro signature|
 
+**Ejemplo:** 
+
+require( dirname(__FILE__) . '/jwt/vendor/autoload.php' );
+    use \Firebase\JWT\JWT;
+    
+
+    $api_key = TU_API_KEY;
+    $secret_key = TU_SECRET_KEY;
+
+    $email = "JohnDoe@gmail.com";
+    $social_id = "176290986";
+    $first_name = "John";
+    $last_name = "Doe";
+    $phone_number = "56912345678";
+    $plan_id = "f93670c4cb6dfbca5db1d45a2ee61278";
+    $return_url =  base64_encode("http://localhost:8888/client_api/responsePAT.php");
+
+    $token_payload = array();
+        
+    $token_payload['api_key'] = $api_key;
+    $token_payload['email'] = $email;
+    $token_payload['social_id'] = $social_id;
+    $token_payload['first_name'] = $first_name;
+    $token_payload['last_name'] = $last_name;
+    $token_payload['return_url'] = $return_url;
+    $token_payload['plan_id'] = $plan_id;
+    
+    
+    $jwt = JWT::encode($token_payload, base64_decode(strtr($secret_key, '-_', '+/')));
+    
+    
+    $apiKey = "api_key=".$api_key;
+    $email = "email=".$email;
+    $social_id = "social_id=".$social_id;
+    $first_name = "first_name=".$first_name;
+    $last_name = "last_name=".$last_name;
+    $return_url = "return_url=".$return_url;
+    $phone_number = "phone_number=".$phone_number;
+    $callback_url = "callback_url=".$callback_url;
+    $plan_id = "plan_id=".$plan_id;
+
+    $s = "s=".$jwt;
+    
+    $url = "http://dev-api.virtualpos.cl/v1/subscriptions/suscribe/&".$apiKey."&".$email."&".$social_id."&".$first_name."&".$last_name."&".$return_url."&".$phone_number."&".$callback_url."&".$plan_id."&".$s;
+    
+    $ch = curl_init();
+    
+    curl_setopt($ch, CURLOPT_URL, $url);    
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+
+    curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+
+    $headers = array();
+    $headers[] = "Connection: keep-alive";
+    $headers[] = "Pragma: no-cache";
+    $headers[] = "Cache-Control: no-cache";
+    $headers[] = "Upgrade-Insecure-Requests: 1";
+    $headers[] = "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36";
+    $headers[] = "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8";
+    $headers[] = "Accept-Encoding: gzip, deflate, br";
+    $headers[] = "Accept-Language: es-ES,es;q=0.9,en;q=0.8,und;q=0.7,la;q=0.6";
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+    $result = curl_exec($ch);
+    
+    if (curl_errno($ch)) {
+        echo 'Error:' . curl_error($ch);
+    }
+    curl_close ($ch);
+    
+    $request =  json_decode($result, TRUE);
+    
+    $redirect = $request['redirect_url'] . '&' . "uuid=". $request['uuid'];
+    error_log("redirect : ".$redirect);
+    header("Status: 301 Moved Permanently");
+    header("Location: " . $redirect);
+    exit;
+
+
+
 **2.-https://api.virtualpos.cl/v1/subscriptions/subscribe/get/:** Operación que permite consultar el estado de una suscripción a plan con PAT VirtualPOS..
 
 **Parámetros de entrada:**
@@ -176,7 +252,7 @@ Para efectuar el pago de una transacción por medio de la API de VirtualPOS, es 
 | Parámetro |  Descripción|
 |--|--|
 | api_key | código único asociado a la cuenta que se está integrando a VirtualPOS a través de la API, Tipo: String |
-|uuid|identificador único de la transacción en virtualpos, Tipo: String (255)|
+|uuid|Código único que representa la transacción de suscripción a un plan con PAT virtualPOS. Se recomienda almacenar este uuid para posteriormente consultar el resultado del registro, Tipo: String (255)|
 |s|La firma de los parámetros efectuada con su secret_key|
 
 **Parámetros de salida:**
@@ -184,27 +260,86 @@ Para efectuar el pago de una transacción por medio de la API de VirtualPOS, es 
 
 | Parámetro | Descripción |
 |--|--|
-| response |  200|
-|  message| ok |
-| cliente | Cliente creado y asociado a la solicitud de pago |
-| email |  Correo electrónico del cliente creado y asociado a la solicitud de pago|
-| first_name | Nombre del cliente creado y asociado a la solicitud de pago |
-| last_name |Apellido del cliente creado y asociado a la solicitud de pago  |
-| order | Solicitud de pago creada para esta solicitud |
-|uuid|Código único que representa la solicitud de pago de una transacción. Se recomienda almacenar este token para posteriormente consultar el resultado del registro.|
-|status|Estado de la solicitud de pago: existen los siguientes 2 estados: **pendiente, pagado**|
-|created|Fecha de creación de la solicitud de pago, **Formato: yyyy-mm-dd hh:mm:ss**|
-|buyOrder|Orden de compra de la solicitud.|
-
-
-
-**Ejemplo:** 
-
-{"status":"OK","code":200,"cliente":{"email":"johndoe@gmail.com","first_name":"John","last_name":"Doe","social_id":"11111111"},"order":{"uuid":"34125c795429b3a8","status":"pagado","created":"2019-03-01 12:47:53","buyOrder":"OCx000065x0655c2f63a81c9fc"}}
+| response |  Código de respuesta del mensaje, 200 indica que se procesó correctamente la suscripción al plan. Ver tabla de códigos de respuesta del servicio|
+|  message| Descripción de respuesta, ver tabla. |
+| client | Cliente creado y asociado a la suscripción |
+| email |  Correo electrónico del cliente creado y asociado a la suscripción|
+| first_name | Nombre del cliente creado y asociado a la suscripcion |
+| last_name |Apellido del cliente creado y asociado a la suscripción  |
+| plan_id | Identificador del plan  |
+|status|Estado de suscripción: existen los siguientes 3 estados: **SUSCRIBIENDO, ACTIVA, CANCELADA**|
+|suscription_date|Fecha de creación de la suscripción **Formato: yyyy-mm-dd hh:mm:ss**|
+|last4CardDigit|Últimos 4 dígitos de la tarjeta registrada.|
+|creditCardType|Marca de la tarjeta registrada (Visa, Mastercard, Magna, Amex…).|
 
 **Códigos de respuesta:**
 
 | Código | Descripción |
 |--|--|
 | 200 | Solicitud de pago existente, se devuelven datos del estado actual de la solicitud de pago |
-|401|Ocurrió un problema al recuperar el registro.|
+|401|Inscripción rechazada por banco emisor.|
+|402|En proceso de inscripción|
+|403|Inscripción cancelada por usuario.|
+|404|Inscripción expirada.|
+|411|No existe un usuario asociado al uuid proporcionado.|
+|500|No existe cuenta virtualPOS asociada a api_key|
+|501|Firma incorrecta|
+|510|Error en parámetro api_key|
+|511|Error en parámetro  uuid|
+|512|Error en parámetro s|
+
+**Ejemplo:** 
+
+PHP:
+
+    require( dirname(__FILE__) . '/jwt/vendor/autoload.php' );
+    use \Firebase\JWT\JWT;
+
+    $uuid = $_POST['uuid'];	
+
+    $api_key = TU_API_KEY;
+    $secret_key = TU_SECRET_KEY;
+      
+
+    $token_payload = array();
+        
+    $token_payload['api_key'] = $api_key;
+    $token_payload['uuid'] = $uuid;
+
+    $jwt = JWT::encode($token_payload, base64_decode(strtr($secret_key, '-_', '+/')));
+
+    $apiKey = "api_key=".$api_key;
+    $uuid = "uuid=".$uuid;
+
+    $s = "s=".$jwt;
+
+    $url = "https://dev-api.virtualpos.cl/v1/subscriptions/suscribe/get/&".$apiKey."&".$uuid."&".$s;
+    
+    $ch = curl_init();
+    
+    curl_setopt($ch, CURLOPT_URL, $url);
+    
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+
+    curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+
+    $headers = array();
+    $headers[] = "Connection: keep-alive";
+    $headers[] = "Pragma: no-cache";
+    $headers[] = "Cache-Control: no-cache";
+    $headers[] = "Upgrade-Insecure-Requests: 1";
+    $headers[] = "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36";
+    $headers[] = "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8";
+    $headers[] = "Accept-Encoding: gzip, deflate, br";
+    $headers[] = "Accept-Language: es-ES,es;q=0.9,en;q=0.8,und;q=0.7,la;q=0.6";
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+    $result = curl_exec($ch);
+    if (curl_errno($ch)) {
+        echo 'Error:' . curl_error($ch);
+    }
+    curl_close ($ch);
+    
+    $request =  json_decode($result, TRUE);
+    echo print_r($request, TRUE);
