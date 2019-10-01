@@ -245,7 +245,7 @@ require( dirname(__FILE__) . '/jwt/vendor/autoload.php' );
 
 
 
-**2.-https://api.virtualpos.cl/v1/subscriptions/subscribe/get/:** Operación que permite consultar el estado de una suscripción a plan con PAT VirtualPOS..
+**2.-https://api.virtualpos.cl/v1/subscriptions/subscribe/get/:** Operación que permite consultar el estado de una suscripción a plan con PAT VirtualPOS.
 
 **Parámetros de entrada:**
 
@@ -343,3 +343,139 @@ PHP:
     
     $request =  json_decode($result, TRUE);
     echo print_r($request, TRUE);
+    
+    
+**2.-https://api.virtualpos.cl/v1/subscriptions/plan/create:** Operación que permite crear un plan de cobro recurrente, el cual quedará en estado activo.
+
+**Parámetros de entrada:**
+
+| Parámetro |  Descripción|
+|--|--|
+| api_key | código único asociado a la cuenta que se está integrando a VirtualPOS a través de la API, Tipo: String |
+|name|Nombre del plan recurrente, Tipo: String (255) - debe ser urlencode|
+|description|Descripción del plan recurrente, Tipo: String (255) - debe ser urlencode|
+|amount|Monto Tipo: String , sin separador ni comas.|
+|currency|Moneda, Tipo: String, 
+Valores
+CLP
+UF|
+|tax|Impuesto aplicado al cobro, Tipo: String (2)
+Valores
+0
+10
+19|
+|trial_days|días de prueba, el primer cobro se realizará una vez transcurridos este indicador, Tipo: int|
+|num_charges|número de cargos,Tipo: int|
+|frequency_type|Frecuencia del cargo, Tipo: String 
+Diario
+Semanal
+Mensual|
+|return_url|URL de su aplicación a la cual se retornará una vez que se haya finalizado la suscripción. En esta URL se deberá ejecutar la consulta del resultado de suscripción, ya que por motivos de seguridad la respuesta no se entrega en forma directa a la URL de retorno. 
+La URL debe ser codificada en Base64
+Tipo: String (255)|
+|s|La firma de los parámetros efectuada con su secret_key|
+
+**Parámetros de salida:**
+
+
+| Parámetro | Descripción |
+|--|--|
+| response |  Código de respuesta del mensaje, 200 indica que se procesó correctamente la suscripción al plan. Ver tabla de códigos de respuesta del servicio.|
+|  message| Descripción de respuesta, ver tabla. |
+| plan_id | Identificador único del plan creado. |
+
+
+**Códigos de respuesta:**
+
+| Código | Descripción |
+|--|--|
+| 200 | Plan creado. |
+|401|Creación de Plan rechazado, cuenta virtualpos sin contrato PAT activo|
+|500|No existe cuenta virtualPOS asociada a api_key|
+|501|Firma incorrecta|
+|510|Error en parámetro api_key|
+|511|Error en el parametro name|
+|512|Error en el parametro description|
+|513|Error en el parametro amount|
+|514|Error en el parametro currency|
+|515|Error en el parametro tax|
+|516|Error en el parametro trial_days|
+|517|Error en el parametro num_charges|
+|518|Error en el parametro frequency_type|
+|519|Error en el parametro return_url|
+|520|Error en el parametro s|
+
+**Ejemplo:** 
+
+PHP:
+
+    require( dirname(__FILE__) . '/jwt/vendor/autoload.php' );
+    use \Firebase\JWT\JWT;
+    
+    $api_key = TU_API_KEY;
+    $secret_key = TU_SECRET_KEY;
+      
+    $name = urlencode("Plan de cobro diario");
+    $description = urlencode("Plan de cobro diario");
+    $amount = "10";
+    $currency = "CLP";
+    $tax = "0";
+    $trial_days = "0";
+    $num_charges = "30";
+    $frequency_type = "Diario";
+    $return_url =  base64_encode("https://www.google.cl");
+    $token_payload = array();
+    $token_payload['api_key'] = $api_key;
+    $token_payload['name'] = $name;
+    $token_payload['description'] = $description;
+    $token_payload['amount'] = $amount;
+    $token_payload['currency'] = $currency;
+    $token_payload['tax'] = $tax;
+    $token_payload['trial_days'] = $trial_days;
+    $token_payload['num_charges'] = $num_charges;
+    $token_payload['frequency_type'] = $frequency_type;
+    $token_payload['return_url'] = $return_url;
+    
+    $jwt = JWT::encode($token_payload, base64_decode(strtr($secret_key, '-_', '+/')));
+    
+    
+    $apiKey = "api_key=".$api_key;
+    $name = "name=".$name;
+    $description = "description=".$description;
+    $amount = "amount=".$amount;
+    $currency = "currency=".$currency;
+    $tax = "tax=".$tax;
+    $trial_days = "trial_days=".$trial_days;
+    $num_charges = "num_charges=".$num_charges;
+    $frequency_type = "frequency_type=".$frequency_type;
+    $return_url = "return_url=".$return_url;
+    
+    $s = "s=".$jwt;
+    
+    $url = "https://dev-api.virtualpos.cl/v1/subscriptions/plan/create?".$apiKey."&".$name."&".$description."&".$amount."&".$currency."&".$tax."&".$trial_days."&".$num_charges."&".$frequency_type."&".$return_url."&".$s;
+       
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+$headers = array();
+$headers[] = 'Authority: dev.virtualpos.cl';
+$headers[] = 'Cache-Control: max-age=0';
+$headers[] = 'Upgrade-Insecure-Requests: 1';
+$headers[] = 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36';
+$headers[] = 'Sec-Fetch-Mode: navigate';
+$headers[] = 'Sec-Fetch-User: ?1';
+$headers[] = 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3';
+$headers[] = 'Sec-Fetch-Site: none';
+$headers[] = 'Accept-Encoding: gzip, deflate, br';
+$headers[] = 'Accept-Language: es-ES,es;q=0.9,en;q=0.8,und;q=0.7,la;q=0.6,gl;q=0.5';
+
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+$result = curl_exec($ch);
+if (curl_errno($ch)) {
+    echo 'Error:' . curl_error($ch);
+}
+curl_close($ch);
+$request =  json_decode($result, TRUE);
+echo print_r($request,TRUE);
