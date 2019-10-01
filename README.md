@@ -355,21 +355,11 @@ PHP:
 |name|Nombre del plan recurrente, Tipo: String (255) - debe ser urlencode|
 |description|Descripción del plan recurrente, Tipo: String (255) - debe ser urlencode|
 |amount|Monto Tipo: String , sin separador ni comas.|
-|currency|Moneda, Tipo: String, 
-Valores
-CLP
-UF|
-|tax|Impuesto aplicado al cobro, Tipo: String (2)
-Valores
-0
-10
-19|
+|currency|Moneda, Tipo: String, Valores : CLP, UF|
+|tax|Impuesto aplicado al cobro, Tipo: String (2), Valores: 0, 10,19|
 |trial_days|días de prueba, el primer cobro se realizará una vez transcurridos este indicador, Tipo: int|
 |num_charges|número de cargos,Tipo: int|
-|frequency_type|Frecuencia del cargo, Tipo: String 
-Diario
-Semanal
-Mensual|
+|frequency_type|Frecuencia del cargo, Tipo: String, Valores: Diario, Semanal, Mensual|
 |return_url|URL de su aplicación a la cual se retornará una vez que se haya finalizado la suscripción. En esta URL se deberá ejecutar la consulta del resultado de suscripción, ya que por motivos de seguridad la respuesta no se entrega en forma directa a la URL de retorno. 
 La URL debe ser codificada en Base64
 Tipo: String (255)|
