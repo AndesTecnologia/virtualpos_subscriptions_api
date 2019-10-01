@@ -360,9 +360,7 @@ PHP:
 |trial_days|días de prueba, el primer cobro se realizará una vez transcurridos este indicador, Tipo: int|
 |num_charges|número de cargos,Tipo: int|
 |frequency_type|Frecuencia del cargo, Tipo: String, Valores: Diario, Semanal, Mensual|
-|return_url|URL de su aplicación a la cual se retornará una vez que se haya finalizado la suscripción. En esta URL se deberá ejecutar la consulta del resultado de suscripción, ya que por motivos de seguridad la respuesta no se entrega en forma directa a la URL de retorno. 
-La URL debe ser codificada en Base64
-Tipo: String (255)|
+|return_url|URL de su aplicación a la cual se retornará una vez que se haya finalizado la suscripción. En esta URL se deberá ejecutar la consulta del resultado de suscripción, ya que por motivos de seguridad la respuesta no se entrega en forma directa a la URL de retorno. La URL debe ser codificada en Base64 Tipo: String (255)|
 |s|La firma de los parámetros efectuada con su secret_key|
 
 **Parámetros de salida:**
@@ -444,28 +442,28 @@ PHP:
     
     $url = "https://dev-api.virtualpos.cl/v1/subscriptions/plan/create?".$apiKey."&".$name."&".$description."&".$amount."&".$currency."&".$tax."&".$trial_days."&".$num_charges."&".$frequency_type."&".$return_url."&".$s;
        
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
-$headers = array();
-$headers[] = 'Authority: dev.virtualpos.cl';
-$headers[] = 'Cache-Control: max-age=0';
-$headers[] = 'Upgrade-Insecure-Requests: 1';
-$headers[] = 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36';
-$headers[] = 'Sec-Fetch-Mode: navigate';
-$headers[] = 'Sec-Fetch-User: ?1';
-$headers[] = 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3';
-$headers[] = 'Sec-Fetch-Site: none';
-$headers[] = 'Accept-Encoding: gzip, deflate, br';
-$headers[] = 'Accept-Language: es-ES,es;q=0.9,en;q=0.8,und;q=0.7,la;q=0.6,gl;q=0.5';
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+	curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+	$headers = array();
+	$headers[] = 'Authority: dev.virtualpos.cl';
+	$headers[] = 'Cache-Control: max-age=0';
+	$headers[] = 'Upgrade-Insecure-Requests: 1';
+	$headers[] = 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36';
+	$headers[] = 'Sec-Fetch-Mode: navigate';
+	$headers[] = 'Sec-Fetch-User: ?1';
+	$headers[] = 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3';
+	$headers[] = 'Sec-Fetch-Site: none';
+	$headers[] = 'Accept-Encoding: gzip, deflate, br';
+	$headers[] = 'Accept-Language: es-ES,es;q=0.9,en;q=0.8,und;q=0.7,la;q=0.6,gl;q=0.5';
 
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-$result = curl_exec($ch);
-if (curl_errno($ch)) {
-    echo 'Error:' . curl_error($ch);
-}
-curl_close($ch);
-$request =  json_decode($result, TRUE);
-echo print_r($request,TRUE);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+	$result = curl_exec($ch);
+	if (curl_errno($ch)) {
+	    echo 'Error:' . curl_error($ch);
+	}
+	curl_close($ch);
+	$request =  json_decode($result, TRUE);
+	echo print_r($request,TRUE);
