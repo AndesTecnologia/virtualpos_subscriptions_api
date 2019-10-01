@@ -345,7 +345,7 @@ PHP:
     echo print_r($request, TRUE);
     
     
-**2.-https://api.virtualpos.cl/v1/subscriptions/plan/create:** Operación que permite crear un plan de cobro recurrente, el cual quedará en estado activo.
+**3.-https://api.virtualpos.cl/v1/subscriptions/plan/create:** Operación que permite crear un plan de cobro recurrente, el cual quedará en estado activo.
 
 **Parámetros de entrada:**
 
