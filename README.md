@@ -516,3 +516,83 @@ PHP:
 	curl_close($ch);
 	$request =  json_decode($result, TRUE);
 	echo print_r($request,TRUE);
+
+**4.-https://api.virtualpos.cl/v1/subscriptions/plan/list:** Operación que permite consultar los planes de suscripción creados para la empresa.
+
+**Parámetros de entrada:**
+
+| Parámetro |  Descripción|
+|--|--|
+| api_key | código único asociado a la cuenta que se está integrando a VirtualPOS a través de la API, Tipo: String |
+|s|La firma de los parámetros efectuada con su secret_key|
+
+**Parámetros de salida:**
+
+
+| Parámetro | Descripción |
+|--|--|
+| response |  Código de respuesta del mensaje, 200 indica que se procesó correctamente la suscripción al plan. Ver tabla de códigos de respuesta del servicio.|
+|  message| Descripción de respuesta, ver tabla. |
+| plans_list | Entrega un listado de objetos que representan el plan|
+** Ejemplo **
+[  { “plan_uuid” : “163accff4d53255eb5b886ff5f2119b7”, 
+     “name” : “Plan de demo”, 
+     “type” : “MONTO_FIJO”, 
+     “is_active” : “T”, 
+     “description” : “PAT con cobro de 100 pesos diarios”,
+     ”created_date” : “2019-11-12”, 
+     “currency” : “CLP”,
+     “trial_days” : “0”,
+     “frequency_type”, “Diario”
+    },
+    { “plan_uuid” : “542accff4d53255ebadf3446ff5f2119c2”, 
+     “name” : “Plan de demo 2 ”, 
+     “type” : “PROGRAMA_DE_PAGOS”, 
+     “is_active” : “T”, 
+     “description” : “PAT con mensual de 100 pesos diarios”,
+     ”created_date” : “2019-11-12”, 
+     “currency” : “CLP”,
+     “trial_days” : “0”,
+     “frequency_type”, “Mensual”
+    }
+]
+
+**Códigos de respuesta:**
+
+| Código | Descripción |
+|--|--|
+| 200 | Lista recuperada. |
+|500|No existe cuenta virtualPOS asociada a api_key|
+|501|Firma incorrecta|
+|510|Error en parámetro api_key|
+
+**5.-https://api.virtualpos.cl/v1/subscriptions/plan/subscriptions:** Operación que permite consultar las suscripciones de un plan.
+
+**Parámetros de entrada:**
+
+| Parámetro |  Descripción|
+|--|--|
+| api_key | código único asociado a la cuenta que se está integrando a VirtualPOS a través de la API, Tipo: String |
+|uuid|Identificador del plan|
+|s|La firma de los parámetros efectuada con su secret_key|
+
+**Parámetros de salida:**
+
+
+| Parámetro | Descripción |
+|--|--|
+| response |  Código de respuesta del mensaje, 200 indica que se procesó correctamente la suscripción al plan. Ver tabla de códigos de respuesta del servicio.|
+|  message| Descripción de respuesta, ver tabla. |
+| suscriptions | Entrega un listado de objetos que representan las suscripciones|
+** Ejemplo **
+[{"uuid":"defc38c664","status":"ACTIVA","is_active":"T","email":"jd@gmail.com","first_name":"Joe","last_name":"Doe"},{"uuid":"ef90ec390b","status":"ACTIVA","is_active":"T","email":"mm@gmail.com","first_name":"Marty","last_name":"Mc"},{"uuid":"48335c7704","status":"ACTIVA","is_active":"T","email":"rd@gmail.com","first_name":"Raul","last_name":"Dados"}]}
+
+
+**Códigos de respuesta:**
+
+| Código | Descripción |
+|--|--|
+| 200 | Lista recuperada. |
+|500|No existe cuenta virtualPOS asociada a api_key|
+|501|Firma incorrecta|
+|510|Error en parámetro api_key|
