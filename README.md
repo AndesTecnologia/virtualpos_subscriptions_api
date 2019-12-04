@@ -132,6 +132,30 @@ Para efectuar el pago de una transacción por medio de la API de VirtualPOS, es 
 |callback_url(**opcional**)|URL a la cual se realizará un callback Asincrono una vez que se haya finalizado el proceso de inscripción en VirtualPOS|
 |s|La firma de los parámetros efectuada con su secret_key|
 
+Ejemplo.
+
+El parámetro charges_program debe ser codificada en Base64
+
+Ejemplo.
+
+[{
+    \"charge_date\": \"2019-11-19\",
+    \"amount\": \"6990\"
+    },
+    {
+      \"charge_date\": \"2020-03-05\",
+      \"amount\": \"3990\"
+    },
+    {
+      \"charge_date\": \"2020-04-05\",
+      \"amount\": \"3990\"
+    },
+    {
+      \"charge_date\": \"2020-05-05\",
+      \"amount\": \"3990\"
+    }]
+
+
 **Parámetros de salida:**
 
 | Parámetro | Descripción |
