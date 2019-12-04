@@ -582,9 +582,11 @@ PHP:
 | Parámetro | Descripción |
 |--|--|
 | response |  Código de respuesta del mensaje, 200 indica que se procesó correctamente la suscripción al plan. Ver tabla de códigos de respuesta del servicio.|
-|  message| Descripción de respuesta, ver tabla. |
+| message| Descripción de respuesta, ver tabla. |
 | suscriptions | Entrega un listado de objetos que representan las suscripciones|
-** Ejemplo **
+
+**Ejemplo**
+
 [{"uuid":"defc38c664","status":"ACTIVA","is_active":"T","email":"jd@gmail.com","first_name":"Joe","last_name":"Doe"},{"uuid":"ef90ec390b","status":"ACTIVA","is_active":"T","email":"mm@gmail.com","first_name":"Marty","last_name":"Mc"},{"uuid":"48335c7704","status":"ACTIVA","is_active":"T","email":"rd@gmail.com","first_name":"Raul","last_name":"Dados"}]}
 
 
