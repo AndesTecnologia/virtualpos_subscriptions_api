@@ -134,7 +134,7 @@ Para efectuar el pago de una transacción por medio de la API de VirtualPOS, es 
 
 Ejemplo.
 
-El parámetro charges_program debe ser codificada en Base64
+**El parámetro charges_program debe ser codificada en Base64**
 
 Ejemplo.
 
@@ -296,6 +296,30 @@ require( dirname(__FILE__) . '/jwt/vendor/autoload.php' );
 |suscription_date|Fecha de creación de la suscripción **Formato: yyyy-mm-dd hh:mm:ss**|
 |last4CardDigit|Últimos 4 dígitos de la tarjeta registrada.|
 |creditCardType|Marca de la tarjeta registrada (Visa, Mastercard, Magna, Amex…).|
+|charges_program|Json que detalla el programa de cargos inscrito.**charge_date**: fecha de cargo.**amount**: monto del cargo..|
+
+**Ejemplo**
+
+[{
+    "charge_date": "2019-11-19",
+    "amount": "11970",
+    “status”:'Pagado'
+    “authorization_date”:
+    “authorization_code”
+    “payment_date”:
+    “payment_amount”:
+  },
+  {
+    "charge_date": "2019-11-29",
+    "amount": "11970",
+    “status”:"Pendiente"
+    “authorization_date”:
+    “authorization_code”
+    “payment_date”:
+    “payment_amount”:
+  }
+  ]
+
 
 **Códigos de respuesta:**
 
