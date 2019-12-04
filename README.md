@@ -127,7 +127,7 @@ Para efectuar el pago de una transacción por medio de la API de VirtualPOS, es 
 |last_name|Apellido del cliente, Tipo: String (255)|
 |phone_number|Número teléfonico del cliente, Tipo: String(11)|
 |plan_id|Identificador del plan a suscribir, Tipo: String|
-|charges_program|Identificador del plan a suscribir, Tipo: String|Este parámetro se debe incluir obligatoriamente para planes del tipo “PROGRAMA DE PAGOS” el cual se selecciona al momento de crear el plan desde el portal de administración de virtualpos|
+|charges_program|Este parámetro se debe incluir obligatoriamente para planes del tipo “PROGRAMA DE PAGOS” el cual se selecciona al momento de crear el plan desde el portal de administración de virtualpos|
 |return_url|La URL debe ser codificada en Base64, Tipo: String (512)|
 |callback_url(**opcional**)|URL a la cual se realizará un callback Asincrono una vez que se haya finalizado el proceso de inscripción en VirtualPOS|
 |s|La firma de los parámetros efectuada con su secret_key|
