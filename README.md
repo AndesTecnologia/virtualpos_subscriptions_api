@@ -232,7 +232,7 @@ require( dirname(__FILE__) . '/jwt/vendor/autoload.php' );
 
     $s = "s=".$jwt;
     
-    $url = "http://dev-api.virtualpos.cl/v1/subscriptions/suscribe/&".$apiKey."&".$email."&".$social_id."&".$first_name."&".$last_name."&".$return_url."&".$phone_number."&".$callback_url."&".$plan_id."&".$s;
+    $url = "http://dev-api.virtualpos.cl/v1/subscriptions/subscribe/&".$apiKey."&".$email."&".$social_id."&".$first_name."&".$last_name."&".$return_url."&".$phone_number."&".$callback_url."&".$plan_id."&".$s;
     
     $ch = curl_init();
     
@@ -362,7 +362,7 @@ PHP:
 
     $s = "s=".$jwt;
 
-    $url = "https://dev-api.virtualpos.cl/v1/subscriptions/suscribe/get/&".$apiKey."&".$uuid."&".$s;
+    $url = "https://dev-api.virtualpos.cl/v1/subscriptions/subscribe/get/&".$apiKey."&".$uuid."&".$s;
     
     $ch = curl_init();
     
