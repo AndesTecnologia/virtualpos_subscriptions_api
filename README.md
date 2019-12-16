@@ -85,7 +85,7 @@ Los recursos necesarios para la implementación los puedes encontrar en [https:/
 	$token_payload['uuid'] = $uuid;
 
 	// FIRMA DE LOS PARAMETROS QUE SE DEBEN INCLUIR EN EL REQUEST HACIA VIRTUALPOS
-	$jwt = JWT::encode($token_payload, base64_decode(strtr($secret_key, '-_', '+/')));
+	$jwt = JWT::encode($token_payload, $secret_key);
 
 	$apiKey = "api_key=".$api_key;
 	$uuid = "uuid=".$uuid;
@@ -217,7 +217,7 @@ require( dirname(__FILE__) . '/jwt/vendor/autoload.php' );
     $token_payload['plan_id'] = $plan_id;
     
     
-    $jwt = JWT::encode($token_payload, base64_decode(strtr($secret_key, '-_', '+/')));
+    $jwt = JWT::encode($token_payload, $secret_key);
     
     
     $apiKey = "api_key=".$api_key;
@@ -355,7 +355,7 @@ PHP:
     $token_payload['api_key'] = $api_key;
     $token_payload['uuid'] = $uuid;
 
-    $jwt = JWT::encode($token_payload, base64_decode(strtr($secret_key, '-_', '+/')));
+    $jwt = JWT::encode($token_payload, $secret_key);
 
     $apiKey = "api_key=".$api_key;
     $uuid = "uuid=".$uuid;
@@ -473,7 +473,7 @@ PHP:
     $token_payload['frequency_type'] = $frequency_type;
     $token_payload['return_url'] = $return_url;
     
-    $jwt = JWT::encode($token_payload, base64_decode(strtr($secret_key, '-_', '+/')));
+    $jwt = JWT::encode($token_payload, $secret_key);
     
     
     $apiKey = "api_key=".$api_key;
