@@ -12,7 +12,7 @@
     $token_payload['api_key'] = $api_key;
     $token_payload['uuid'] = $uuid;
 
-    $jwt = JWT::encode($token_payload, $secret_key, '-_', '+/');
+    $jwt = JWT::encode($token_payload, $secret_key);
 
     $apiKey = "api_key=".$api_key;
     $uuid = "uuid=".$uuid;
