@@ -30,7 +30,7 @@
     $token_payload['frequency_type'] = $frequency_type;
     $token_payload['return_url'] = $return_url;
     
-    $jwt = JWT::encode($token_payload, $secret_key, '-_', '+/');
+    $jwt = JWT::encode($token_payload, $secret_key);
     
     
     $apiKey = "api_key=".$api_key;
