@@ -270,7 +270,7 @@ require( dirname(__FILE__) . '/jwt/vendor/autoload.php' );
 
 
 
-**2.-https://api.virtualpos.cl/v1/subscriptions/subscribe/get/:** Operación que permite consultar el estado de una suscripción a plan con PAT VirtualPOS.
+**2.-https://api.virtualpos.cl/v1/subscriptions/get/:** Operación que permite consultar el estado de una suscripción a plan con PAT VirtualPOS.
 
 **Parámetros de entrada:**
 
@@ -362,7 +362,7 @@ PHP:
 
     $s = "s=".$jwt;
 
-    $url = "https://dev-api.virtualpos.cl/v1/subscriptions/subscribe/get/?".$apiKey."&".$uuid."&".$s;
+    $url = "https://dev-api.virtualpos.cl/v1/subscriptions/get/?".$apiKey."&".$uuid."&".$s;
     
     $ch = curl_init();
     
