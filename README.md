@@ -33,8 +33,8 @@ SI tienes una cuenta en Virtualpos, puedes acceder al API REST mediante los sigu
 
 |Ambiente|Base URL  |
 |--|--|
-|  **Producción**|https://api.virtualpos.cl/v1 |
-|**Sandbox**|https://dev-api.virtualpos.cl/v1
+|  **Producción**|https://api.virtualpos.cl/v2 |
+|**Sandbox**|https://dev-api.virtualpos.cl/v2
 
 El endpoint de **Producción** proporciona acceso directo para generar transacciones reales. El endpoint **Sandbox** permite probar su integración sin afectar los datos reales.
 
@@ -94,7 +94,7 @@ Los recursos necesarios para la implementación los puedes encontrar en [https:/
 	$s = "s=".$jwt;
 		
 	// URL HACIA VIRTUALPOS
-	$url = "https://api.virtualpos.cl/v1/payment/getstatus?".$apiKey."&".$uuid."&".$s;
+	$url = "https://api.virtualpos.cl/v2/payment/getstatus?".$apiKey."&".$uuid."&".$s;
 
 **Endpoints**
 
@@ -106,15 +106,15 @@ SANDBOX: https://dev-api.virtualpos.cl
 
 Endpoint Producción: 
 
- 1. https://api.virtualpos.cl/v1/subscriptions/subscribe: Inicia una suscripcion en virtualpos.cl ambiente de producción, retorna una url y un uuid para redireccionar el navegador su cliente.
- 2. https://api.virtualpos.cl/v1/subscriptions/get: Retorna el estado de la suscripción, se debe invocar una vez que virtualpos.cl retorna el control a la pagina del su comercio. 
+ 1. https://api.virtualpos.cl/v2/subscriptions/subscribe: Inicia una suscripcion en virtualpos.cl ambiente de producción, retorna una url y un uuid para redireccionar el navegador su cliente.
+ 2. https://api.virtualpos.cl/v2/subscriptions/get: Retorna el estado de la suscripción, se debe invocar una vez que virtualpos.cl retorna el control a la pagina del su comercio. 
  
 Para efectuar el pago de una transacción por medio de la API de VirtualPOS, es necesario seguir el siguiente procedimiento.
  
 ![enter image description here](https://s3-us-west-2.amazonaws.com/virtualpos/media/api_images/flujo-api-pat.png)
 
 
-**1.- https://api.virtualpos.cl/v1/subscriptions/subscribe**: Operación que permite iniciar la suscripción a un plan con un PAT. El registro se realiza a través de una transacción de suscripción, en donde su aplicación debe entregar datos del usuario y plan. El usuario acepta el plan e inscribe una tarjeta de crédito para que se realice el cargo.
+**1.- https://api.virtualpos.cl/v2/subscriptions/subscribe**: Operación que permite iniciar la suscripción a un plan con un PAT. El registro se realiza a través de una transacción de suscripción, en donde su aplicación debe entregar datos del usuario y plan. El usuario acepta el plan e inscribe una tarjeta de crédito para que se realice el cargo.
 
 **Parámetros de entrada:**
 
@@ -232,7 +232,7 @@ require( dirname(__FILE__) . '/jwt/vendor/autoload.php' );
 
     $s = "s=".$jwt;
     
-    $url = "https://dev-api.virtualpos.cl/v1/subscriptions/subscribe/?".$apiKey."&".$email."&".$social_id."&".$first_name."&".$last_name."&".$return_url."&".$phone_number."&".$callback_url."&".$plan_id."&".$s;
+    $url = "https://dev-api.virtualpos.cl/v2/subscriptions/subscribe/?".$apiKey."&".$email."&".$social_id."&".$first_name."&".$last_name."&".$return_url."&".$phone_number."&".$callback_url."&".$plan_id."&".$s;
     
     $ch = curl_init();
     
@@ -270,7 +270,7 @@ require( dirname(__FILE__) . '/jwt/vendor/autoload.php' );
 
 
 
-**2.-https://api.virtualpos.cl/v1/subscriptions/get/:** Operación que permite consultar el estado de una suscripción a plan con PAT VirtualPOS.
+**2.-https://api.virtualpos.cl/v2/subscriptions/get/:** Operación que permite consultar el estado de una suscripción a plan con PAT VirtualPOS.
 
 **Parámetros de entrada:**
 
@@ -362,7 +362,7 @@ PHP:
 
     $s = "s=".$jwt;
 
-    $url = "https://dev-api.virtualpos.cl/v1/subscriptions/get/?".$apiKey."&".$uuid."&".$s;
+    $url = "https://dev-api.virtualpos.cl/v2/subscriptions/get/?".$apiKey."&".$uuid."&".$s;
     
     $ch = curl_init();
     
@@ -394,7 +394,7 @@ PHP:
     echo print_r($request, TRUE);
     
     
-**3.-https://api.virtualpos.cl/v1/subscriptions/plan/create:** Operación que permite crear un plan de cobro recurrente, el cual quedará en estado activo.
+**3.-https://api.virtualpos.cl/v2/subscriptions/plan/create:** Operación que permite crear un plan de cobro recurrente, el cual quedará en estado activo.
 
 **Parámetros de entrada:**
 
@@ -489,7 +489,7 @@ PHP:
     
     $s = "s=".$jwt;
     
-    $url = "https://dev-api.virtualpos.cl/v1/subscriptions/plan/create?".$apiKey."&".$name."&".$description."&".$amount."&".$currency."&".$tax."&".$trial_days."&".$num_charges."&".$frequency_type."&".$return_url."&".$s;
+    $url = "https://dev-api.virtualpos.cl/v2/subscriptions/plan/create?".$apiKey."&".$name."&".$description."&".$amount."&".$currency."&".$tax."&".$trial_days."&".$num_charges."&".$frequency_type."&".$return_url."&".$s;
        
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
@@ -517,7 +517,7 @@ PHP:
 	$request =  json_decode($result, TRUE);
 	echo print_r($request,TRUE);
 
-**4.-https://api.virtualpos.cl/v1/subscriptions/plan/list:** Operación que permite consultar los planes de suscripción creados para la empresa.
+**4.-https://api.virtualpos.cl/v2/subscriptions/plan/list:** Operación que permite consultar los planes de suscripción creados para la empresa.
 
 **Parámetros de entrada:**
 
@@ -566,7 +566,7 @@ PHP:
 |501|Firma incorrecta|
 |510|Error en parámetro api_key|
 
-**5.-https://api.virtualpos.cl/v1/subscriptions/plan/subscriptions:** Operación que permite consultar las suscripciones de un plan.
+**5.-https://api.virtualpos.cl/v2/subscriptions/plan/subscriptions:** Operación que permite consultar las suscripciones de un plan.
 
 **Parámetros de entrada:**
 
@@ -598,3 +598,41 @@ PHP:
 |500|No existe cuenta virtualPOS asociada a api_key|
 |501|Firma incorrecta|
 |510|Error en parámetro api_key|
+
+
+**6.-https://api.virtualpos.cl/v2/subscriptions/charge:** Operación que permite programar un cargo en una suscripcion del tipo monto variable plazo indefinido.
+
+**Parámetros de entrada:**
+
+| Parámetro |  Descripción|
+|--|--|
+| api_key | código único asociado a la cuenta que se está integrando a VirtualPOS a través de la API, Tipo: String |
+|uuid|Identificador unico de la suscripcion|
+|amount|Monto del cobro que se desea programar, Tipo: int|
+|charge_date|fecha que se desea realizar el cargo, Tipo: date yyyy-mm-dd, ejemplo: 2021-09-30|
+|description|detalle descriptivo asociado al cargo que se realizara, Tipo: String(128)|
+|s|La firma de los parámetros efectuada con su secret_key|
+
+**Parámetros de salida:**
+
+
+| Parámetro | Descripción |
+|--|--|
+| response |  Código de respuesta del mensaje, 200 indica que se realizo la programacion del cargo correctamente.|
+| message| Descripción de respuesta, ver tabla. |
+| uuid | Identificador unico de la suscripcion|
+
+
+**Códigos de respuesta:**
+
+| Código | Descripción |
+|--|--|
+| 200 | Cargo programado exitosamente. |
+|500|No existe cuenta virtualpos asociada a la api key|
+|501|Firma incorrecta|
+|510|Error en el parametro api_key|
+|511|Error en el parametro amount|
+|513|Error en el parametro amount(Decimal)|
+|516|Error en el parametro s|
+|518|Error en parámetro uuid'|
+|520|El tipo de plan no permite el envío de cargos|
