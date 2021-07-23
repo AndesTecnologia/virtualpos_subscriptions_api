@@ -636,3 +636,35 @@ PHP:
 |516|Error en el parametro s|
 |518|Error en parámetro uuid'|
 |520|El tipo de plan no permite el envío de cargos|
+
+**7.-https://api.virtualpos.cl/v2/subscriptions/cancel:** Operación que permite cancelar una suscripcion y detener todos sus pagos futuros. 
+
+**Parámetros de entrada:**
+
+| Parámetro |  Descripción|
+|--|--|
+| api_key | código único asociado a la cuenta que se está integrando a VirtualPOS a través de la API, Tipo: String |
+|uuid|Identificador unico de la suscripcion|
+|s|La firma de los parámetros efectuada con su secret_key|
+
+**Parámetros de salida:**
+
+
+| Parámetro | Descripción |
+|--|--|
+| response |  Código de respuesta del mensaje, 200 indica que se realizo la programacion del cargo correctamente.|
+| message| Descripción de respuesta, ver tabla. |
+| uuid | Identificador unico de la suscripcion|
+
+
+**Códigos de respuesta:**
+
+| Código | Descripción |
+|--|--|
+| 200 | Suscripcion cancelada de forma exitosa. |
+|500|No existe cuenta virtualpos asociada a la api key|
+|501|Firma incorrecta|
+|510|Error en el parametro api_key|
+|511|Error en el parametro uuid|
+|516|Error en el parametro s|
+|518|Error en parámetro uuid|
