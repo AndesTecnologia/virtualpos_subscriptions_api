@@ -34,7 +34,7 @@ SI tienes una cuenta en Virtualpos, puedes acceder al API REST mediante los sigu
 |Ambiente|Base URL  |
 |--|--|
 |  **Producción**|https://api.virtualpos.cl/v2 |
-|**Sandbox**|https://dev-api.virtualpos.cl/v2
+|**Sandbox**|https://api.virtualpos-sandbox.com/v2
 
 El endpoint de **Producción** proporciona acceso directo para generar transacciones reales. El endpoint **Sandbox** permite probar su integración sin afectar los datos reales.
 
@@ -53,7 +53,7 @@ Tanto su ApiKey como su SecretKey se obtienen desde su cuenta de VirtualPos:
 
 | Producción | https://www.virtualpos.cl/admin/index.php?controller=pjAdmin&action=pjActionOwner&tab=8 |
 |--|--|
-| **Sandbox** | **https://dev.virtualpos.cl/admin/index.php?controller=pjAdmin&action=pjActionOwner&tab=8** |
+| **Sandbox** | **https://www.virtualpos-sandbox.com/admin/index.php?controller=pjAdmin&action=pjActionOwner&tab=8** |
 
 
 **Tarjetas de pruebas Sandbox**
@@ -99,7 +99,7 @@ Los recursos necesarios para la implementación los puedes encontrar en [https:/
 **Endpoints**
 
 PRODUCCIÓN: https://api.virtualpos.cl
-SANDBOX: https://dev-api.virtualpos.cl
+SANDBOX: https://api.virtualpos-sandbox.com
 
 
 **Suscribir a un plan de cobro recurrente.** 
@@ -178,7 +178,7 @@ Ejemplo.
 |402|Transacción de suscripción rechazada, cuenta virtualPOS con error en configuración PAT |
 |405|Parámetro email no cumple con formato e-mail.|
 |406|Parámetro return_url no cumple con formato de url.|
-|500|Error no existe cuenta virtualPOS asociada a api_ke|
+|500|Error no existe cuenta virtualPOS asociada a api_key|
 |501|Firma incorrecta|
 |504|No fue posible crear el cliente en virtualPOS.|
 |510|Error en parámetro api_key|
@@ -232,7 +232,7 @@ require( dirname(__FILE__) . '/jwt/vendor/autoload.php' );
 
     $s = "s=".$jwt;
     
-    $url = "https://dev-api.virtualpos.cl/v2/subscriptions/subscribe/?".$apiKey."&".$email."&".$social_id."&".$first_name."&".$last_name."&".$return_url."&".$phone_number."&".$callback_url."&".$plan_id."&".$s;
+    $url = "https://api.virtualpos-sandbox.com/v2/subscriptions/subscribe/?".$apiKey."&".$email."&".$social_id."&".$first_name."&".$last_name."&".$return_url."&".$phone_number."&".$callback_url."&".$plan_id."&".$s;
     
     $ch = curl_init();
     
@@ -286,39 +286,17 @@ require( dirname(__FILE__) . '/jwt/vendor/autoload.php' );
 | Parámetro | Descripción |
 |--|--|
 | response |  Código de respuesta del mensaje, 200 indica que se procesó correctamente la suscripción al plan. Ver tabla de códigos de respuesta del servicio|
-|  message| Descripción de respuesta, ver tabla. |
-| client | Cliente creado y asociado a la suscripción |
-| email |  Correo electrónico del cliente creado y asociado a la suscripción|
-| first_name | Nombre del cliente creado y asociado a la suscripcion |
-| last_name |Apellido del cliente creado y asociado a la suscripción  |
+|  message| Descripción de respuesta, **SUSCRIBIENDO, ACTIVA, CANCELADA**|
+| client | [OBJETO] Cliente creado y asociado a la suscripción |
+|  email |  Correo electrónico del cliente creado y asociado a la suscripción|
+|  first_name | Nombre del cliente creado y asociado a la suscripcion |
+|  last_name |Apellido del cliente creado y asociado a la suscripción  |
 | plan_id | Identificador del plan  |
-|status|Estado de suscripción: existen los siguientes 3 estados: **SUSCRIBIENDO, ACTIVA, CANCELADA**|
 |suscription_date|Fecha de creación de la suscripción **Formato: yyyy-mm-dd hh:mm:ss**|
 |last4CardDigit|Últimos 4 dígitos de la tarjeta registrada.|
 |creditCardType|Marca de la tarjeta registrada (Visa, Mastercard, Magna, Amex…).|
 |charges_program|Json que detalla el programa de cargos inscrito.**charge_date**: fecha de cargo.**amount**: monto del cargo..|
 
-**Ejemplo**
-
-[{
-    "charge_date": "2019-11-19",
-    "amount": "11970",
-    “status”:'Pagado'
-    “authorization_date”:
-    “authorization_code”
-    “payment_date”:
-    “payment_amount”:
-  },
-  {
-    "charge_date": "2019-11-29",
-    "amount": "11970",
-    “status”:"Pendiente"
-    “authorization_date”:
-    “authorization_code”
-    “payment_date”:
-    “payment_amount”:
-  }
-  ]
 
 
 **Códigos de respuesta:**
@@ -362,7 +340,7 @@ PHP:
 
     $s = "s=".$jwt;
 
-    $url = "https://dev-api.virtualpos.cl/v2/subscriptions/get/?".$apiKey."&".$uuid."&".$s;
+    $url = "https://api.virtualpos-sandbox.com/v2/subscriptions/get/?".$apiKey."&".$uuid."&".$s;
     
     $ch = curl_init();
     
@@ -489,7 +467,7 @@ PHP:
     
     $s = "s=".$jwt;
     
-    $url = "https://dev-api.virtualpos.cl/v2/subscriptions/plan/create?".$apiKey."&".$name."&".$description."&".$amount."&".$currency."&".$tax."&".$trial_days."&".$num_charges."&".$frequency_type."&".$return_url."&".$s;
+    $url = "https://api.virtualpos-sandbox.com/v2/subscriptions/plan/create?".$apiKey."&".$name."&".$description."&".$amount."&".$currency."&".$tax."&".$trial_days."&".$num_charges."&".$frequency_type."&".$return_url."&".$s;
        
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
