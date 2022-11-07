@@ -681,5 +681,34 @@ PHP:
 |511|Error en el parametro uuid|
 |516|Error en el parametro s|
 
+**9.-https://api.virtualpos.cl/v2/subscriptions/charge/status:** Retorna el estado de un cargo, para los cargos en estado **pagado**, tambien retorna la orden. 
 
+**Parámetros de entrada:**
+
+| Parámetro |  Descripción|
+|--|--|
+| api_key | código único asociado a la cuenta que se está integrando a VirtualPOS a través de la API, Tipo: String |
+|cid|Identificador unico del cargo|
+|s|La firma de los parámetros efectuada con su secret_key|
+
+**Parámetros de salida:**
+
+
+| Parámetro | Descripción |
+|--|--|
+| response |  Código de respuesta del mensaje, 200 indica que se proceso correctamente la solicitud.|
+| message| Descripción de respuesta, ver tabla. |
+
+
+
+**Códigos de respuesta:**
+
+| Código | Descripción |
+|--|--|
+| 200 | Solicitud procesada correctamente. |
+|500|No existe cuenta virtualpos asociada a la api key|
+|501|Firma incorrecta|
+|510|Error en el parametro api_key|
+|511|Error en el parametro uuid|
+|516|Error en el parametro s|
 
