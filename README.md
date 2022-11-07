@@ -718,7 +718,7 @@ PHP:
 |amount|monto total de la transacción|
 |merchant_internal_code|Identificar del comercio, útil para realizar trazabilidad de la trasaccion|
 |merchant_internal_channel|Identificar del canal del comercio que realiza la transacción virtualpos|
-|deposits|depositos o abonos que se realizaran en la cuenta corriente del comercio|
+|deposits| Array de objetos con los depositos o abonos que se realizaran en la cuenta corriente del comercio|
 |description|Número del abono con respecto al total de abonos.|
 |installment|Monto total de la cuota sujeta a comision|
 |processing_flat_fee|Costo fijo de comision que cobrará VirtualPOS|
