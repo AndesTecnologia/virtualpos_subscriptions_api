@@ -599,6 +599,7 @@ PHP:
 | response |  Código de respuesta del mensaje, 200 indica que se realizo la programacion del cargo correctamente.|
 | message| Descripción de respuesta, ver tabla. |
 | uuid | Identificador unico de la suscripcion|
+|cid| Identificar unico del cargo, este parámetro sirve para hacer seguimiento del estado del cargo tipo: String(64)|
 
 
 **Códigos de respuesta:**
@@ -647,7 +648,7 @@ PHP:
 |516|Error en el parametro s|
 |518|Error en parámetro uuid|
 
-**8.-https://api.virtualpos.cl/v2/subscriptions/changecard:** Genera una url por medio de la cual el suscriptor puede cambiar la tarjeta de la suscripción. 
+**8.-https://api.virtualpos.cl/v2/subscriptions/changecard:** Genera una url por medio de la cual el suscriptor puede cambiar la tarjeta inscrita. 
 
 **Parámetros de entrada:**
 
@@ -679,3 +680,6 @@ PHP:
 |510|Error en el parametro api_key|
 |511|Error en el parametro uuid|
 |516|Error en el parametro s|
+
+
+
