@@ -77,24 +77,24 @@ Los recursos necesarios para la implementación los puedes encontrar en [https:/
 
 **Ejemplo de firma en PHP**
 
-	$secret_key = TU_SECRET_KEY;  // TU SECRET KEY VIRTUALPOS
-	$api_key = TU_API_KEY;  // TU API KEY VIRTUALPOS 
+    $secret_key = TU_SECRET_KEY;  // TU SECRET KEY VIRTUALPOS
+    $api_key = TU_API_KEY;  // TU API KEY VIRTUALPOS 
 
-	$token_payload = array();    
-	$token_payload['api_key'] = $api_key;
-	$token_payload['uuid'] = $uuid;
+    $token_payload = array();    
+    $token_payload['api_key'] = $api_key;
+    $token_payload['uuid'] = $uuid;
 
-	// FIRMA DE LOS PARAMETROS QUE SE DEBEN INCLUIR EN EL REQUEST HACIA VIRTUALPOS
-	$jwt = JWT::encode($token_payload, $secret_key);
+    // FIRMA DE LOS PARAMETROS QUE SE DEBEN INCLUIR EN EL REQUEST HACIA VIRTUALPOS
+    $jwt = JWT::encode($token_payload, $secret_key);
 
-	$apiKey = "api_key=".$api_key;
-	$uuid = "uuid=".$uuid;
-		
-	// FIRMA
-	$s = "s=".$jwt;
-		
-	// URL HACIA VIRTUALPOS
-	$url = "https://api.virtualpos.cl/v2/payment/getstatus?".$apiKey."&".$uuid."&".$s;
+    $apiKey = "api_key=".$api_key;
+    $uuid = "uuid=".$uuid;
+        
+    // FIRMA
+    $s = "s=".$jwt;
+        
+    // URL HACIA VIRTUALPOS
+    $url = "https://api.virtualpos.cl/v2/payment/getstatus?".$apiKey."&".$uuid."&".$s;
 
 **Endpoints**
 
@@ -322,7 +322,7 @@ PHP:
     require( dirname(__FILE__) . '/jwt/vendor/autoload.php' );
     use \Firebase\JWT\JWT;
 
-    $uuid = $_POST['uuid'];	
+    $uuid = $_POST['uuid']; 
 
     $api_key = TU_API_KEY;
     $secret_key = TU_SECRET_KEY;
@@ -469,31 +469,31 @@ PHP:
     
     $url = "https://api.virtualpos-sandbox.com/v2/subscriptions/plan/create?".$apiKey."&".$name."&".$description."&".$amount."&".$currency."&".$tax."&".$trial_days."&".$num_charges."&".$frequency_type."&".$return_url."&".$s;
        
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-	curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
-	$headers = array();
-	$headers[] = 'Authority: dev.virtualpos.cl';
-	$headers[] = 'Cache-Control: max-age=0';
-	$headers[] = 'Upgrade-Insecure-Requests: 1';
-	$headers[] = 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36';
-	$headers[] = 'Sec-Fetch-Mode: navigate';
-	$headers[] = 'Sec-Fetch-User: ?1';
-	$headers[] = 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3';
-	$headers[] = 'Sec-Fetch-Site: none';
-	$headers[] = 'Accept-Encoding: gzip, deflate, br';
-	$headers[] = 'Accept-Language: es-ES,es;q=0.9,en;q=0.8,und;q=0.7,la;q=0.6,gl;q=0.5';
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+    curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+    $headers = array();
+    $headers[] = 'Authority: dev.virtualpos.cl';
+    $headers[] = 'Cache-Control: max-age=0';
+    $headers[] = 'Upgrade-Insecure-Requests: 1';
+    $headers[] = 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36';
+    $headers[] = 'Sec-Fetch-Mode: navigate';
+    $headers[] = 'Sec-Fetch-User: ?1';
+    $headers[] = 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3';
+    $headers[] = 'Sec-Fetch-Site: none';
+    $headers[] = 'Accept-Encoding: gzip, deflate, br';
+    $headers[] = 'Accept-Language: es-ES,es;q=0.9,en;q=0.8,und;q=0.7,la;q=0.6,gl;q=0.5';
 
-	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-	$result = curl_exec($ch);
-	if (curl_errno($ch)) {
-	    echo 'Error:' . curl_error($ch);
-	}
-	curl_close($ch);
-	$request =  json_decode($result, TRUE);
-	echo print_r($request,TRUE);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    $result = curl_exec($ch);
+    if (curl_errno($ch)) {
+        echo 'Error:' . curl_error($ch);
+    }
+    curl_close($ch);
+    $request =  json_decode($result, TRUE);
+    echo print_r($request,TRUE);
 
 **4.-https://api.virtualpos.cl/v2/subscriptions/plan/list:** Operación que permite consultar los planes de suscripción creados para la empresa.
 
@@ -646,3 +646,36 @@ PHP:
 |511|Error en el parametro uuid|
 |516|Error en el parametro s|
 |518|Error en parámetro uuid|
+
+**8.-https://api.virtualpos.cl/v2/subscriptions/changecard:** Genera una url por medio de la cual el suscriptor puede cambiar la tarjeta de la suscripción. 
+
+**Parámetros de entrada:**
+
+| Parámetro |  Descripción|
+|--|--|
+| api_key | código único asociado a la cuenta que se está integrando a VirtualPOS a través de la API, Tipo: String |
+|uuid|Identificador unico de la suscripcion|
+|s|La firma de los parámetros efectuada con su secret_key|
+
+**Parámetros de salida:**
+
+
+| Parámetro | Descripción |
+|--|--|
+| response |  Código de respuesta del mensaje, 200 indica que se realizo la programacion del cargo correctamente.|
+| message| Descripción de respuesta, ver tabla. |
+| uuid | Identificador unico de la suscripcion|
+|change_card_url| url del formulario al cual se debe redirigir al suscriptor para que cambien la tarjeta inscrita.|
+|expiration_date|Fecha de vigencia de la url para cambiar la tarjeta de la suscripcion|
+|current_card_number| Últimos 4 digitos de la tarjeta actual inscrita|
+
+**Códigos de respuesta:**
+
+| Código | Descripción |
+|--|--|
+| 200 | Url del cambio de tarjeta generada exitosamente. |
+|500|No existe cuenta virtualpos asociada a la api key|
+|501|Firma incorrecta|
+|510|Error en el parametro api_key|
+|511|Error en el parametro uuid|
+|516|Error en el parametro s|
