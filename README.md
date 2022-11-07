@@ -698,8 +698,33 @@ PHP:
 |--|--|
 | response |  Código de respuesta del mensaje, 200 indica que se proceso correctamente la solicitud.|
 | message| Descripción de respuesta, ver tabla. |
-
-
+|charge|Objeto que tiene la informacion del cargo |
+|cid|Identificador unico del cargo|
+|description|detalle descriptivo asociado al cargo que se realizara, Tipo: String(128)|
+|charge_date|fecha que se desea realizar el cargo, Tipo: date yyyy-mm-dd, ejemplo: 2021-09-30|
+|amount|Monto del cobro que se desea programar, Tipo: int|
+|status| estado del cargo, [pendiente, pagado, rechazado, cancelado]|
+|currency|moneda del cargo, [CLP,UF]|
+|Order| Objeto con la informacion del cobro efectuado|
+|uuid|identificador único de la transacción en virtualpos|
+|status|Estado de la orden VirtualPOS[ pagado, pendiente, rechazado, expirado ]|
+|created_at|Fecha de creación de la orden de pago VirtualPOS|
+|card_number|Últimos 4 digitos de la tarjeta con la que se realizó el pago|
+|authorized_at|Fecha en la cual se autorizo la transacción|
+|auth_code|código de autorizacion de la transacción|
+|installment_amount|monto de cada una de las cuota|
+|installment_number|Número de cuotas con la cual se realizó la compra|
+|payment_type_code|[ VC, VN, SI, Transferencia, QR ]|
+|amount|monto total de la transacción|
+|merchant_internal_code|Identificar del comercio, útil para realizar trazabilidad de la trasaccion|
+|merchant_internal_channel|Identificar del canal del comercio que realiza la transacción virtualpos|
+|deposits|depositos o abonos que se realizaran en la cuenta corriente del comercio|
+|description|Número del abono con respecto al total de abonos.|
+|installment|Monto total de la cuota sujeta a comision|
+|processing_flat_fee|Costo fijo de comision que cobrará VirtualPOS|
+|processing_fee|Costo variable de comision que cobrará VirtualPOS|
+|payout_amount|Monto del abono que realizará VirtualPOS|
+|payout_date|Fecha en que se realizará abono|
 
 **Códigos de respuesta:**
 
