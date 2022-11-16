@@ -703,7 +703,7 @@ PHP:
 |description|detalle descriptivo asociado al cargo que se realizara, Tipo: String(128)|
 |charge_date|fecha que se desea realizar el cargo, Tipo: date yyyy-mm-dd, ejemplo: 2021-09-30|
 |amount|Monto del cobro que se desea programar, Tipo: int|
-|status| estado del cargo, [pendiente, pagado, rechazado, cancelado]|
+|status| estado del cargo, [pendiente, procesando, pagado, rechazado, cancelado, anulado]|
 |currency|moneda del cargo, [CLP,UF]|
 |Order| Objeto con la informacion del cobro efectuado|
 |uuid|identificador único de la transacción en virtualpos|
