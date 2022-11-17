@@ -705,7 +705,7 @@ PHP:
 |amount|Monto del cobro que se desea programar, Tipo: int|
 |status| estado del cargo, [pendiente, procesando, pagado, rechazado, cancelado, anulado]|
 |currency|moneda del cargo, [CLP,UF]|
-|Order| Objeto con la informacion del cobro efectuado|
+|Order| Objeto con la informacion del cobro efectuado, retorna null si el cobro se encuentra en un estado distinto a pagado.|
 |uuid|identificador único de la transacción en virtualpos|
 |status|Estado de la orden VirtualPOS[ pagado, pendiente, rechazado, expirado ]|
 |created_at|Fecha de creación de la orden de pago VirtualPOS|
